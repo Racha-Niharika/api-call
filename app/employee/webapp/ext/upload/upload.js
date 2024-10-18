@@ -1,3 +1,4 @@
+
 sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
@@ -18,11 +19,12 @@ sap.ui.define([
             };
 
             try {
-                // Invoke the action to get the Base64 PDF from the backend
+                
+                
                 let result = await this.editFlow.invokeAction('empsrv.upload', mParameters);
-                let base64PDF = result.getObject().value;  // Assuming the backend response contains the Base64 PDF
+                let base64PDF = result.getObject().value; 
 
-                // Convert Base64 PDF to Blob
+               
                 let binary = atob(base64PDF);
                 let len = binary.length;
                 let buffer = new Uint8Array(len);
@@ -31,19 +33,18 @@ sap.ui.define([
                 }
                 let blob = new Blob([buffer], { type: 'application/pdf' });
 
-                // Create a URL for the Blob
+               
                 let pdfUrl = URL.createObjectURL(blob);
 
-                // Create an HTML control with an iframe to show the PDF
                 let oHTML = new HTML({
-                    content: `<iframe src="${pdfUrl}" width="700px" height="2000px" style="border: none;"></iframe>`
+                    content: `<iframe src="${pdfUrl}" width="700px" height="700px" style="border: none;"></iframe>`
                 });
 
-                // Create and open a dialog box
+               
                 let oDialog = new Dialog({
                     title: 'Employee PDF',
                     contentWidth: "700px",
-                    contentHeight: "500px",
+                    contentHeight: "700px",
                     content: [oHTML],
                     beginButton: new Button({
                         text: 'Close',
@@ -56,7 +57,7 @@ sap.ui.define([
                     }
                 });
 
-                oDialog.open();  // Open the dialog with the PDF
+                oDialog.open(); 
 
             } catch (error) {
                 console.error("Error occurred during XML export:", error);
@@ -65,6 +66,7 @@ sap.ui.define([
         }
     };
 });
+
 /*
 sap.ui.define([
     "sap/m/MessageToast",

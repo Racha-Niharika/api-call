@@ -6,6 +6,7 @@ service empsrv {
 
   action upload() returns String;
   }
+  action xml() returns String;
 }
 annotate empsrv.Employees with @odata.draft.enabled;
 annotate empsrv.Employees with @(

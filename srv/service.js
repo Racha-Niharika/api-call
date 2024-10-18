@@ -1,3 +1,4 @@
+
 const cds = require('@sap/cds');
 const { create } = require('xmlbuilder2');
 const axios = require('axios');
@@ -15,7 +16,7 @@ module.exports = cds.service.impl(async function () {
 
         console.log("Row data:", rowData);
         const xmlData = create({ version: '1.0' })
-            .ele('Employees')  // Root element
+            .ele('Employee')  // Root element
             .ele('ID').txt(rowData.ID).up()
             .ele('firstName').txt(rowData.firstName).up()
             .ele('lastName').txt(rowData.lastName).up()
@@ -27,19 +28,19 @@ module.exports = cds.service.impl(async function () {
 
         console.log("Base64 Encoded XML:", base64EncodedXML);
         try {
-          const authResponse = await axios.get('https://chembonddev.authentication.us10.hana.ondemand.com/oauth/token', {
+          const authResponse = await axios.get('https://runsimple.authentication.us10.hana.ondemand.com/oauth/token', {
               params: {
                   grant_type: 'client_credentials'
               },
               auth: {
-                  username: 'sb-ffaa3ab1-4f00-428b-be0a-1ec55011116b!b142994|ads-xsappname!b65488',
-                  password: 'e44adb92-4284-4c5f-8d41-66f8c1125bc5$F4bN1ypCgWzc8CsnjwOfT157HCu5WL0JVwHuiuwHcSc='
+                  username: 'sb-0659fb15-d82d-43fc-9a1a-4ff294ffade6!b33406|ads-xsappname!b65488',
+                  password: 'cad88edf-9d4c-4a29-8301-7d89403c35df$xJJn5FeYQgciuMINbDMk86-7AHxHgl2p6n6nijoaCqA='
               }
           });
           const accessToken = authResponse.data.access_token;
           console.log("Access Token:", accessToken);
           const pdfResponse = await axios.post('https://adsrestapi-formsprocessing.cfapps.us10.hana.ondemand.com/v1/adsRender/pdf?templateSource=storageName', {
-              xdpTemplate: "PrePrintedLabel/Default",
+              xdpTemplate: "niharika/Default",
               xmlData: base64EncodedXML, 
               formType: "print",
               formLocale: "",
@@ -64,6 +65,7 @@ module.exports = cds.service.impl(async function () {
        
     });
 });
+
 /*const cds = require('@sap/cds');
 const axios = require('axios');
 const qs = require('qs');
